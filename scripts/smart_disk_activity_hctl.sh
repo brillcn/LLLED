@@ -550,9 +550,9 @@ check_disk_activity() {
     
     # 读取磁盘统计信息 (读写扇区数)
     if [[ -f "/proc/diskstats" ]]; then
-        stats_before=$(grep " $device " /proc/diskstats | awk '{print $6+$10}')
+        stats_before=$(printf "%.0f" "$(grep " $device " /proc/diskstats | awk '{print $6+$10}')")
         sleep 2
-        stats_after=$(grep " $device " /proc/diskstats | awk '{print $6+$10}')
+        stats_after=$(printf "%.0f" "$(grep " $device " /proc/diskstats | awk '{print $6+$10}')")
         
         if [[ "$stats_after" -gt "$stats_before" ]]; then
             echo "ACTIVE"
